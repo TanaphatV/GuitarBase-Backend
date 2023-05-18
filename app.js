@@ -6,7 +6,7 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 const pgp = require('pg-promise')(/* options */)
-const db = pgp('postgres://db_486exampledatabase_user:hvTCzmU5PWO2vjLhGo6x5eQuhDNKxEOr@dpg-cghvpno2qv2772ga8bn0-a/db_486exampledatabase')
+const db = pgp('postgres://guitarbase_user:TekJC4tD3tfYzI4waX1hpnWYmvxoUgNR@dpg-chifrpu7avj2ivcedt30-a/guitarbase')
 //const db = pgp('postgres://db_486exampledatabase_user:hvTCzmU5PWO2vjLhGo6x5eQuhDNKxEOr@dpg-cghvpno2qv2772ga8bn0-a.singapore-postgres.render.com/db_486exampledatabase')
 
 
@@ -32,12 +32,10 @@ app.post('/', (req, res) => {
   res.send('Post request Hello World!')
 })
 
-app.get('/top3', (req, res) => {
-  //res.json({result: top3Course})//select * from public.course order by code limit 3
-
-  db.any('select * from public.course order by code limit 3')
+app.get('/Brand', (req, res) => {
+  db.any('SELECT "Name" FROM public."Brand"')
     .then((data) => {
-      console.log('Course: ', data)
+      console.log('Brand: ', data)
       res.json(data)
     })
     .catch((error) => {
