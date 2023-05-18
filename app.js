@@ -43,8 +43,8 @@ app.post('/', (req, res) => {
 app.get('/Brand', (req, res) => {
   db.any('SELECT "value" FROM public."Brand"')
     .then((data) => {
-      console.log('Brand: ', data.value)
-      res.json(data.value)
+      console.log('Brand: ', data)
+      res.json(data)
     })
     .catch((error) => {
       console.log('ERROR:', error)
@@ -55,8 +55,8 @@ app.get('/Brand', (req, res) => {
 app.get('/BodyShape', (req, res) => {
   db.any('SELECT "value" FROM public."BodyShape"')
     .then((data) => {
-      console.log('BodyShape: ', data.value)
-      res.json(data.value)
+      console.log('BodyShape: ', data)
+      res.json(data)
     })
     .catch((error) => {
       console.log('ERROR:', error)
@@ -67,8 +67,8 @@ app.get('/BodyShape', (req, res) => {
 app.get('/Pickup', (req, res) => {
   db.any('SELECT "value" FROM public."Pickup"')
     .then((data) => {
-      console.log('Pickup: ', data.value)
-      res.json(data.value)
+      console.log('Pickup: ', data)
+      res.json(data)
     })
     .catch((error) => {
       console.log('ERROR:', error)
