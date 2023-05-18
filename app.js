@@ -33,7 +33,7 @@ app.post('/', (req, res) => {
 })
 
 app.get('/Brand', (req, res) => {
-  db.any('SELECT "Name" FROM public."Brand"')
+  db.any('SELECT "value" FROM public."Brand"')
     .then((data) => {
       console.log('Brand: ', data)
       res.json(data)
