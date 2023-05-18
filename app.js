@@ -16,6 +16,8 @@ const top3Course = [{code:"DT160",cname:"C programming", description:"loren ipsu
 {code:"DT161",cname:"C++ programming", description:"loren ipsum +"},
 {code:"DT261",cname:"Data Structures", description:"loren ipsum d"}]
 
+
+
 app.use(bodyParser.json())
 app.use(
   bodyParser.urlencoded({
@@ -28,6 +30,12 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
+app.get('/top3', (req, res) => {
+  //res.json({result: top3Course})//select * from public.course order by code limit 3
+
+  res.json(top3Course)
+})
+
 app.post('/', (req, res) => {
   res.send('Post request Hello World!')
 })
@@ -35,8 +43,32 @@ app.post('/', (req, res) => {
 app.get('/Brand', (req, res) => {
   db.any('SELECT "value" FROM public."Brand"')
     .then((data) => {
-      console.log('Brand: ', data)
-      res.json(data)
+      console.log('Brand: ', data.value)
+      res.json(data.value)
+    })
+    .catch((error) => {
+      console.log('ERROR:', error)
+      res.send("ERROR: can't get data ")
+    })
+})
+
+app.get('/BodyShape', (req, res) => {
+  db.any('SELECT "value" FROM public."BodyShape"')
+    .then((data) => {
+      console.log('BodyShape: ', data.value)
+      res.json(data.value)
+    })
+    .catch((error) => {
+      console.log('ERROR:', error)
+      res.send("ERROR: can't get data ")
+    })
+})
+
+app.get('/Pickup', (req, res) => {
+  db.any('SELECT "value" FROM public."Pickup"')
+    .then((data) => {
+      console.log('Pickup: ', data.value)
+      res.json(data.value)
     })
     .catch((error) => {
       console.log('ERROR:', error)
