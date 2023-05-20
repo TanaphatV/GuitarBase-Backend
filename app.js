@@ -20,8 +20,8 @@ app.use(
     extended: true,
   }))*/
 
-  app.use(bodyParser.json({ limit: '1mb' }));
-  app.use(bodyParser.urlencoded({ limit: '1mb', extended: true }));
+  app.use(bodyParser.json({ limit: '10mb' }));
+  app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 
 // Enable CORS for all origins
 app.use(cors());
