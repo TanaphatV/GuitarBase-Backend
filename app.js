@@ -77,8 +77,13 @@ app.get('/Pickup', (req, res) => {
 
 app.post('/uploadGuitar', (req, res) => {
   const { name, brand, body, pickup, imgByte } = req.body;
+
+  // Convert the string back to an array of bytes
+  const byteStringArray = imgByte.split(',').map(byteString => Number(byteString));
+  const imgByteArray = Buffer.from(byteStringArray);
+
   const text = 'INSERT INTO public."Guitar" ("Name", "Brand", "BodyShape", "Pickup", "Image") VALUES ($1, $2, $3, $4, $5)';
-  const values = [name, brand, body, pickup, imgByte];
+  const values = [name, brand, body, pickup, imgByteArray];
 
   db.none(text, values)
     .then(() => {
