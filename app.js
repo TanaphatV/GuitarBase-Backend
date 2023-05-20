@@ -25,6 +25,7 @@ app.use(
 
 // Enable CORS for all origins
 app.use(cors());
+app.use(fileUpload());
 app.options('/uploadGuitar', cors());
 
 app.get('/', (req, res) => {
@@ -87,13 +88,18 @@ app.get('/Guitars', (req, res) => {
 })
 
 app.post('/uploadGuitar', (req, res) => {
-  const { name, brand, body, pickup, imgByte } = req.body;
+  const { name, brand, body, pickup, image } = req.body;
 
-  // Convert the base64-encoded string to an array of bytea values
-  const imgByteArray = imgByte.map(base64String => Buffer.from(base64String, 'base64'));
+  if (!req.files || !req.files.image) {
+    console.log('No image file provided');
+    res.sendStatus(400);
+    return;
+  }
+
+  const { data } = req.files.image;
 
   const text = 'INSERT INTO public."Guitar" ("Name", "Brand", "BodyShape", "Pickup", "Image") VALUES ($1, $2, $3, $4, $5)';
-  const values = [name, brand, body, pickup, imgByteArray];
+  const values = [name, brand, body, pickup, data];
 
   db.none(text, values)
     .then(() => {
