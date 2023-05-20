@@ -75,6 +75,17 @@ app.get('/Pickup', (req, res) => {
     })
 })
 
+app.get('/Guitars', (req, res) => {
+  db.any('SELECT * FROM public."Guitar"')
+    .then((data) => {
+      res.json(data)
+    })
+    .catch((error) => {
+      console.log('ERROR:', error)
+      res.send("ERROR: can't get data ")
+    })
+})
+
 app.post('/uploadGuitar', (req, res) => {
   const { name, brand, body, pickup, imgByte } = req.body;
 
