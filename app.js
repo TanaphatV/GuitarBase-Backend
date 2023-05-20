@@ -84,13 +84,11 @@ app.get('/Guitars', (req, res) => {
 app.post('/uploadGuitar', (req, res) => {
   const { name, brand, body, pickup, imageUrl } = req.body;
 
-  if (!req.files || !req.files.image) {
-    console.log('No image file provided');
+  if (!imageUrl) {
+    console.log('No image URL provided');
     res.sendStatus(400);
     return;
   }
-
-  const { data } = req.files.image;
 
   const text = 'INSERT INTO public."Guitar" ("Name", "Brand", "BodyShape", "Pickup", "ImageUrl") VALUES ($1, $2, $3, $4, $5)';
   const values = [name, brand, body, pickup, imageUrl];
@@ -105,6 +103,7 @@ app.post('/uploadGuitar', (req, res) => {
       res.sendStatus(500);
     });
 });
+
 
 app.get('/students', (req, res) => {
   db.any('select * from public.student')
