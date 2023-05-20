@@ -3,93 +3,86 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 4000;
 
-const pgp = require('pg-promise')(/* options */)
-const db = pgp('postgres://guitarbase_user:TekJC4tD3tfYzI4waX1hpnWYmvxoUgNR@dpg-chifrpu7avj2ivcedt30-a/guitarbase')
+const pgp = require('pg-promise')();
+const db = pgp('postgres://guitarbase_user:TekJC4tD3tfYzI4waX1hpnWYmvxoUgNR@dpg-chifrpu7avj2ivcedt30-a/guitarbase');
 
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 
 const top3Course = [
   { code: "DT160", cname: "C programming", description: "loren ipsum c" },
   { code: "DT161", cname: "C++ programming", description: "loren ipsum +" },
   { code: "DT261", cname: "Data Structures", description: "loren ipsum d" }
-]
+];
 
-/*app.use(bodyParser.json())
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  }))*/
-
-  app.use(bodyParser.json({ limit: '10mb' }));
-  app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
-
-// Enable CORS for all origins
 app.use(cors());
 app.use(fileUpload());
 app.options('/uploadGuitar', cors());
 
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
+
 app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+  res.send('Hello World!');
+});
 
 app.get('/top3', (req, res) => {
-  res.json(top3Course)
-})
+  res.json(top3Course);
+});
 
 app.post('/', (req, res) => {
-  res.send('Post request Hello World!')
-})
+  res.send('Post request Hello World!');
+});
 
 app.get('/Brand', (req, res) => {
   db.any('SELECT "value" FROM public."Brand"')
     .then((data) => {
-      console.log('Brand: ', data)
-      res.json(data)
+      console.log('Brand: ', data);
+      res.json(data);
     })
     .catch((error) => {
-      console.log('ERROR:', error)
-      res.send("ERROR: can't get data ")
-    })
-})
+      console.log('ERROR:', error);
+      res.send("ERROR: can't get data");
+    });
+});
 
 app.get('/BodyShape', (req, res) => {
   db.any('SELECT "value" FROM public."BodyShape"')
     .then((data) => {
-      console.log('BodyShape: ', data)
-      res.json(data)
+      console.log('BodyShape: ', data);
+      res.json(data);
     })
     .catch((error) => {
-      console.log('ERROR:', error)
-      res.send("ERROR: can't get data ")
-    })
-})
+      console.log('ERROR:', error);
+      res.send("ERROR: can't get data");
+    });
+});
 
 app.get('/Pickup', (req, res) => {
   db.any('SELECT "value" FROM public."Pickup"')
     .then((data) => {
-      console.log('Pickup: ', data)
-      res.json(data)
+      console.log('Pickup: ', data);
+      res.json(data);
     })
     .catch((error) => {
-      console.log('ERROR:', error)
-      res.send("ERROR: can't get data ")
-    })
-})
+      console.log('ERROR:', error);
+      res.send("ERROR: can't get data");
+    });
+});
 
 app.get('/Guitars', (req, res) => {
   db.any('SELECT * FROM public."Guitar"')
     .then((data) => {
-      res.json(data)
+      res.json(data);
     })
     .catch((error) => {
-      console.log('ERROR:', error)
-      res.send("ERROR: can't get data ")
-    })
-})
+      console.log('ERROR:', error);
+      res.send("ERROR: can't get data");
+    });
+});
 
 app.post('/uploadGuitar', (req, res) => {
-  const { name, brand, body, pickup, image } = req.body;
+  const { name, brand, body, pickup, imageUrl } = req.body;
 
   if (!req.files || !req.files.image) {
     console.log('No image file provided');
@@ -99,8 +92,8 @@ app.post('/uploadGuitar', (req, res) => {
 
   const { data } = req.files.image;
 
-  const text = 'INSERT INTO public."Guitar" ("Name", "Brand", "BodyShape", "Pickup", "Image") VALUES ($1, $2, $3, $4, $5)';
-  const values = [name, brand, body, pickup, data];
+  const text = 'INSERT INTO public."Guitar" ("Name", "Brand", "BodyShape", "Pickup", "ImageUrl") VALUES ($1, $2, $3, $4, $5)';
+  const values = [name, brand, body, pickup, imageUrl];
 
   db.none(text, values)
     .then(() => {
@@ -113,25 +106,22 @@ app.post('/uploadGuitar', (req, res) => {
     });
 });
 
-
-
 app.get('/students', (req, res) => {
   db.any('select * from public.student')
     .then((data) => {
-      console.log('all student: ', data)
-      res.json(data)
+      console.log('all student: ', data);
+      res.json(data);
     })
     .catch((error) => {
-      console.log('ERROR:', error)
-      res.send("ERROR: can't get data")
-    })
-})
-
+      console.log('ERROR:', error);
+      res.send("ERROR: can't get data");
+    });
+});
 
 app.get('*', (req, res) => {
-  res.send("I don't know this request")
-})
+  res.send("I don't know this request");
+});
 
 app.listen(port, () => {
-  console.log(`My Example app listening on port ${port}`)
-})
+  console.log(`My Example app listening on port ${port}`);
+});
