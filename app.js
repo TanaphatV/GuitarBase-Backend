@@ -1,5 +1,3 @@
-
-
 const express = require("express");
 const cors = require('cors');
 const app = express();
@@ -7,16 +5,14 @@ const port = process.env.PORT || 4000;
 
 const pgp = require('pg-promise')(/* options */)
 const db = pgp('postgres://guitarbase_user:TekJC4tD3tfYzI4waX1hpnWYmvxoUgNR@dpg-chifrpu7avj2ivcedt30-a/guitarbase')
-//const db = pgp('postgres://db_486exampledatabase_user:hvTCzmU5PWO2vjLhGo6x5eQuhDNKxEOr@dpg-cghvpno2qv2772ga8bn0-a.singapore-postgres.render.com/db_486exampledatabase')
-
 
 const bodyParser = require('body-parser')
 
-const top3Course = [{code:"DT160",cname:"C programming", description:"loren ipsum c"},
-{code:"DT161",cname:"C++ programming", description:"loren ipsum +"},
-{code:"DT261",cname:"Data Structures", description:"loren ipsum d"}]
-
-
+const top3Course = [
+  { code: "DT160", cname: "C programming", description: "loren ipsum c" },
+  { code: "DT161", cname: "C++ programming", description: "loren ipsum +" },
+  { code: "DT261", cname: "Data Structures", description: "loren ipsum d" }
+]
 
 app.use(bodyParser.json())
 app.use(
@@ -24,15 +20,15 @@ app.use(
     extended: true,
   }))
 
+// Enable CORS for all origins
 app.use(cors());
+app.options('/uploadGuitar', cors());
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
 app.get('/top3', (req, res) => {
-  //res.json({result: top3Course})//select * from public.course order by code limit 3
-
   res.json(top3Course)
 })
 
