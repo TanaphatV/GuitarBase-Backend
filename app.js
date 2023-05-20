@@ -76,20 +76,22 @@ app.get('/Pickup', (req, res) => {
     })
 })
 
-app.get('/cat', (req, res) => {
-  const { color, region } = req.query;
-  res.send('We are doing the Cat page for color = ' + color + ' and region = ' + region)
-})
+app.post('/uploadGuitar', (req, res) => {
+  const { name, brand, body, pickup, imgByte } = req.body;
+  const text = 'INSERT INTO public."Guitar" ("Name", "Brand", "BodyShape", "Pickup", "Image") VALUES ($1, $2, $3, $4, $5)';
+  const values = [name, brand, body, pickup, imgByte];
 
-app.get('/cat/:subPath', (req, res) => {
-  const { subPath } = req.params;
-  res.send(`Accept Cat ${subPath} Sub Request.`)
-})
+  db.none(text, values)
+    .then(() => {
+      console.log('Guitar data inserted successfully');
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.error('Error inserting guitar data:', error);
+      res.sendStatus(500);
+    });
+});
 
-app.get('/cat/:subPath/:nextSubPath', (req, res) => {
-  const { subPath, nextSubPath } = req.params;
-  res.send(`Accept Cat ${subPath} Sub Request. and ${nextSubPath}`)
-})
 
 app.get('/students', (req, res) => {
   db.any('select * from public.student')
@@ -103,36 +105,6 @@ app.get('/students', (req, res) => {
     })
 })
 
-app.get('/students/:id', (req, res) => {
-  const { id } = req.params;
-  db.any('select * from public.student where "id" = $1', id)
-    .then((data) => {
-      console.log('all student: ', data)
-      res.json(data)
-    })
-    .catch((error) => {
-      console.log('ERROR:', error)
-      res.send("ERROR: can't get data")
-    })
-})
-
-app.post('/student', (req, res) => {
-  console.log('Got body:', req.body);
-  const { id } = req.body;
-  db.any('select * from public.student where "id" = $1', id)
-    .then((data) => {
-      console.log('DATA:', data)
-      res.json(data)
-    })
-    .catch((error) => {
-      console.log('ERROR:', error)
-      res.send("ERROR:Can't get data")
-    })
-});
-
-app.get('/c*', (req, res) => {
-  res.send('get in path c*')
-})
 
 app.get('*', (req, res) => {
   res.send("I don't know this request")
