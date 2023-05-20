@@ -7,6 +7,7 @@ const pgp = require('pg-promise')(/* options */)
 const db = pgp('postgres://guitarbase_user:TekJC4tD3tfYzI4waX1hpnWYmvxoUgNR@dpg-chifrpu7avj2ivcedt30-a/guitarbase')
 
 const bodyParser = require('body-parser')
+const fileUpload = require('express-fileupload');
 
 const top3Course = [
   { code: "DT160", cname: "C programming", description: "loren ipsum c" },
