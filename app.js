@@ -14,11 +14,14 @@ const top3Course = [
   { code: "DT261", cname: "Data Structures", description: "loren ipsum d" }
 ]
 
-app.use(bodyParser.json())
+/*app.use(bodyParser.json())
 app.use(
   bodyParser.urlencoded({
     extended: true,
-  }))
+  }))*/
+
+  app.use(bodyParser.json({ limit: '1mb' }));
+  app.use(bodyParser.urlencoded({ limit: '1mb', extended: true }));
 
 // Enable CORS for all origins
 app.use(cors());
