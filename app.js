@@ -24,7 +24,7 @@ app.use(
     extended: true,
   }))
 
-app.use(cors({origin: '*'}));
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
