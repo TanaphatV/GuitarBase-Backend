@@ -75,7 +75,7 @@ app.get('/Guitars', (req, res) => {
   let body = req.query.body;
   let pickup = req.query.pickup;
   console.log(brand);
-  if(brand === undefined) brand = "Brand";
+  if(brand === undefined){brand = "Brand"; console.log("It's undefined")} ;
   if(body === undefined) body = "BodyShape";
   if(pickup === undefined) pickup = "Pickup";
   console.log(brand);
