@@ -81,6 +81,7 @@ app.get('/Guitars', (req, res) => {
   console.log(brand);
   const text = 'SELECT * FROM public."Guitar" WHERE "Brand" = $1 AND "BodyShape" = $2 AND "Pickup" = $3'; 
   const values = [brand,body,pickup];
+  console.log(text,values);
 
   db.any(text,values)
     .then((data) => {
