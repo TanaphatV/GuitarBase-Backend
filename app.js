@@ -74,9 +74,9 @@ app.get('/Guitars', (req, res) => {
   let brand = req.query.brand;
   let body = req.query.body;
   let pickup = req.query.pickup;
-  if (brand === "none") brand = '"Brand"';
-  if (body === "none") body = '"BodyShape"';
-  if (pickup === "none") pickup = '"Pickup"';
+  if (brand === "none" || brand === "undefined") brand = '"Brand"';//using "Brand"="Brand" in sql will return everything in the column
+  if (body === "none"|| body === "undefined") body = '"BodyShape"';
+  if (pickup === "none"|| pickup === "undefined") pickup = '"Pickup"';
   const text = 'SELECT * FROM public."Guitar" WHERE "Brand" = \'' + brand + '\' AND "BodyShape" = \'' + body + '\' AND "Pickup" = \'' + pickup + '\'';//single quote encapsulating double quote seems to messup everything
   const sqlText = (text.replace(/"'/g,"\"")).replace(/'"/g,"\"");//the single quote will stackup with the double quote
   console.log(sqlText);
