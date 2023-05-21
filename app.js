@@ -76,11 +76,11 @@ app.get('/Guitars', (req, res) => {
   let pickup = req.query.pickup;
   console.log(brand);
   if (brand === "none") {
-    brand = 'Brand';
+    brand = '"Brand"';
     console.log("It's undefined");
   }
-  if (body === "none") body = 'BodyShape';
-  if (pickup === "none") pickup = 'Pickup';
+  if (body === "none") body = '"BodyShape"';
+  if (pickup === "none") pickup = '"Pickup"';
   console.log(brand);
   const text = 'SELECT * FROM public."Guitar" WHERE "Brand" = $1 AND "BodyShape" = $2 AND "Pickup" = $3'; 
   const values = [brand, body, pickup];
