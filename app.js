@@ -82,11 +82,11 @@ app.get('/Guitars', (req, res) => {
   if (body === "none") body = '"BodyShape"';
   if (pickup === "none") pickup = '"Pickup"';
   console.log(brand);
-  const text = 'SELECT * FROM public."Guitar" WHERE "Brand" = $1 AND "BodyShape" = $2 AND "Pickup" = $3'; 
+  const text = 'SELECT * FROM public."Guitar" WHERE "Brand" = ' + brand + ' AND "BodyShape" = ' + body + ' AND "Pickup" = ' + pickup; 
   const values = [brand, body, pickup];
-  console.log(text, values);
+  console.log(text);
 
-  db.any(text, values)
+  db.any(text)
     .then((data) => {
       res.json(data);
     })
