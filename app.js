@@ -71,7 +71,17 @@ app.get('/Pickup', (req, res) => {
 });
 
 app.get('/Guitars', (req, res) => {
-  db.any('SELECT * FROM public."Guitar"')
+  const brand = req.query.brand;
+  const body = req.query.body;
+  const pickup = req.query.pickup;
+  if(brand == '') brand = '"Brand"';
+  if(body == '') body = '"BodyShape"';
+  if(pickup == '') pickup = '"PickUp"';
+
+  const text = 'SELECT * FROM public."Guitar" WHERE "Brand" = $1 AND "BodyShape" = $2 AND "PickUp" = $3'; 
+  const values = [brand,body,pickup];
+
+  db.any(text,values)
     .then((data) => {
       res.json(data);
     })
@@ -101,19 +111,6 @@ app.post('/uploadGuitar', (req, res) => {
     .catch((error) => {
       console.error('Error inserting guitar data:', error);
       res.sendStatus(500);
-    });
-});
-
-
-app.get('/students', (req, res) => {
-  db.any('select * from public.student')
-    .then((data) => {
-      console.log('all student: ', data);
-      res.json(data);
-    })
-    .catch((error) => {
-      console.log('ERROR:', error);
-      res.send("ERROR: can't get data");
     });
 });
 
