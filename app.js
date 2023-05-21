@@ -74,17 +74,11 @@ app.get('/Guitars', (req, res) => {
   let brand = req.query.brand;
   let body = req.query.body;
   let pickup = req.query.pickup;
-  console.log(brand);
-  if (brand === "none") {
-    brand = '"Brand"';
-    console.log("It's undefined");
-  }
+  if (brand === "none") brand = '"Brand"';
   if (body === "none") body = '"BodyShape"';
   if (pickup === "none") pickup = '"Pickup"';
-  console.log(brand);
-  const text = 'SELECT * FROM public."Guitar" WHERE "Brand" = \'' + brand + '\' AND "BodyShape" = \'' + body + '\' AND "Pickup" = \'' + pickup + '\''; 
-  const sqlText = (text.replace(/"'/g,"\"")).replace(/'"/g,"\"");
-  const values = [brand, body, pickup];
+  const text = 'SELECT * FROM public."Guitar" WHERE "Brand" = \'' + brand + '\' AND "BodyShape" = \'' + body + '\' AND "Pickup" = \'' + pickup + '\'';//single quote encapsulating double quote seems to messup everything
+  const sqlText = (text.replace(/"'/g,"\"")).replace(/'"/g,"\"");//the single quote will stackup with the double quote
   console.log(sqlText);
 
   db.any(sqlText)
