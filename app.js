@@ -71,9 +71,9 @@ app.get('/Pickup', (req, res) => {
 });
 
 app.get('/Guitars', (req, res) => {
-  const brand = req.query.brand;
-  const body = req.query.body;
-  const pickup = req.query.pickup;
+  let brand = req.query.brand;
+  let body = req.query.body;
+  let pickup = req.query.pickup;
   if(brand == '') brand = '"Brand"';
   if(body == '') body = '"BodyShape"';
   if(pickup == '') pickup = '"Pickup"';
