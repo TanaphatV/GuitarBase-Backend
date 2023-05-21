@@ -37,7 +37,7 @@ app.post('/', (req, res) => {
 app.get('/Brand', (req, res) => {
   db.any('SELECT "value" FROM public."Brand"')
     .then((data) => {
-      console.log('Brand: ', data);
+      //console.log('Brand: ', data);
       res.json(data);
     })
     .catch((error) => {
@@ -49,7 +49,7 @@ app.get('/Brand', (req, res) => {
 app.get('/BodyShape', (req, res) => {
   db.any('SELECT "value" FROM public."BodyShape"')
     .then((data) => {
-      console.log('BodyShape: ', data);
+     // console.log('BodyShape: ', data);
       res.json(data);
     })
     .catch((error) => {
@@ -61,7 +61,7 @@ app.get('/BodyShape', (req, res) => {
 app.get('/Pickup', (req, res) => {
   db.any('SELECT "value" FROM public."Pickup"')
     .then((data) => {
-      console.log('Pickup: ', data);
+  //    console.log('Pickup: ', data);
       res.json(data);
     })
     .catch((error) => {
@@ -74,9 +74,9 @@ app.get('/Guitars', (req, res) => {
   let brand = req.query.brand;
   let body = req.query.body;
   let pickup = req.query.pickup;
-  if(brand == '') brand = '"Brand"';
-  if(body == '') body = '"BodyShape"';
-  if(pickup == '') pickup = '"Pickup"';
+  if(brand == undefined) brand = '"Brand"';
+  if(body == undefined) body = '"BodyShape"';
+  if(pickup == undefined) pickup = '"Pickup"';
 
   const text = 'SELECT * FROM public."Guitar" WHERE "Brand" = $1 AND "BodyShape" = $2 AND "Pickup" = $3'; 
   const values = [brand,body,pickup];
