@@ -144,6 +144,8 @@ app.post('/login', (req, res) => {
         res.sendStatus(200);
       } else {
         console.log("Invalid User/Password");
+        console.log(data[0].pass);
+        console.log(pass);
         res.sendStatus(401);
       }
     })
