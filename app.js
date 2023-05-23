@@ -92,7 +92,7 @@ app.get('/Guitars', (req, res) => {
 });
 
 app.post('/editGuitar', (req, res) => {
-  const { id,name, brand, body, pickup, imageUrl } = req.body;
+  const { id, name, brand, body, pickup, imageUrl } = req.body;
 
   if (!imageUrl) {
     console.log('No image URL provided');
@@ -100,17 +100,17 @@ app.post('/editGuitar', (req, res) => {
     return;
   }
 
-  const text = 'UPDATE public."Guitar" SET "Name" = $1,"Brand"=$2, "BodyShape" = $3, "Pickup = $4", "ImageUrl" = $5 WHERE "id" = $6'
+  const text = 'UPDATE public."Guitar" SET "Name" = $1, "Brand" = $2, "BodyShape" = $3, "Pickup" = $4, "ImageUrl" = $5 WHERE "id" = $6';
 
-  const values = [name, brand, body, pickup, imageUrl,id];
+  const values = [name, brand, body, pickup, imageUrl, id];
 
   db.none(text, values)
     .then(() => {
-      console.log('Guitar data inserted successfully');
+      console.log('Guitar data updated successfully');
       res.sendStatus(200);
     })
     .catch((error) => {
-      console.error('Error inserting guitar data:', error);
+      console.error('Error updating guitar data:', error);
       res.sendStatus(500);
     });
 });
