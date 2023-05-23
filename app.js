@@ -131,6 +131,31 @@ app.post('/editGuitar', (req, res) => {
     });
 });
 
+app.post('/login', (req, res) => {
+  const { user, pass} = req.body;
+
+  const text = 'SELECT "pass" FROM public."AdminAccount" WHERE "user" = $1';
+
+  db.any(text, user)
+    .then((data) => {
+      if(data === pass)
+      {
+        console.log("Login Successful");
+        res.sendStatus(200);
+      }
+      else
+      {
+        console.log("Invalid User/Password");
+        res.send(401);
+      }
+
+    })
+    .catch((error) => {
+      console.error('Error sending/receiving credentials:', error);
+      res.sendStatus(500);
+    });
+});
+
 app.post('/uploadGuitar', (req, res) => {
   const { name, brand, body, pickup, imageUrl } = req.body;
 
