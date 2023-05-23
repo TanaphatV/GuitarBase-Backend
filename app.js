@@ -100,7 +100,7 @@ app.post('/editGuitar', (req, res) => {
     return;
   }
 
-  const text = 'UPDATE public."Guitar" SET "Name" = $1,"Brand"=$2, "BodyShape" = $3, "Pickup = $4", "ImageUrl" = $5 WHERE "id" = $6;'
+  const text = 'UPDATE public."Guitar" SET "Name" = $1,"Brand"=$2, "BodyShape" = $3, "Pickup = $4", "ImageUrl" = $5 WHERE "id" = $6'
 
   const values = [name, brand, body, pickup, imageUrl,id];
 
