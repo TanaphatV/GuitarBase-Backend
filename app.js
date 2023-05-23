@@ -138,15 +138,12 @@ app.post('/login', (req, res) => {
 
   db.any(text, user)
     .then((data) => {
-      if(data === pass)
-      {
+      if (data.length > 0 && data[0].pass === pass) {
         console.log("Login Successful");
         res.sendStatus(200);
-      }
-      else
-      {
+      } else {
         console.log("Invalid User/Password");
-        res.send(401);
+        res.sendStatus(401);
       }
 
     })
