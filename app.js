@@ -91,6 +91,22 @@ app.get('/Guitars', (req, res) => {
     });
 });
 
+app.post('/deleteGuitar', (req, res) => {
+  const { id } = req.body;
+
+  const text = 'DELETE FROM public."Guitar" WHERE "id"=$1';
+
+  db.none(text, id)
+    .then(() => {
+      console.log('Guitar deleted successfully');
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.error('Error deleting guitar data:', error);
+      res.sendStatus(500);
+    });
+});
+
 app.post('/editGuitar', (req, res) => {
   const { id, name, brand, body, pickup, imageUrl } = req.body;
 
