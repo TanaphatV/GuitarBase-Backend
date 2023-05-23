@@ -91,6 +91,29 @@ app.get('/Guitars', (req, res) => {
     });
 });
 
+app.post('/editGuitar', (req, res) => {
+  const { id,name, brand, body, pickup, imageUrl } = req.body;
+
+  if (!imageUrl) {
+    console.log('No image URL provided');
+    res.sendStatus(400);
+    return;
+  }
+
+  const text = 'UPDATE public."Guitar" SET "Name" = $1,"Brand"=$2, "BodyShape" = $3, "Pickup = $4", "ImageUrl" = $5 WHERE "id" = $6;'
+
+  const values = [name, brand, body, pickup, imageUrl,id];
+
+  db.none(text, values)
+    .then(() => {
+      console.log('Guitar data inserted successfully');
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.error('Error inserting guitar data:', error);
+      res.sendStatus(500);
+    });
+});
 
 app.post('/uploadGuitar', (req, res) => {
   const { name, brand, body, pickup, imageUrl } = req.body;
