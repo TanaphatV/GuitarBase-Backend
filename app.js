@@ -132,11 +132,12 @@ app.post('/editGuitar', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-  const { user, pass} = req.body;
+  const { user, pass } = req.body;
 
   const text = 'SELECT "pass" FROM public."AdminAccount" WHERE "user" = $1';
+  const values = [user]; // Array containing the value for $1 parameter
 
-  db.any(text, user)
+  db.any(text, values)
     .then((data) => {
       if (data.length > 0 && data[0].pass === pass) {
         console.log("Login Successful");
@@ -145,13 +146,13 @@ app.post('/login', (req, res) => {
         console.log("Invalid User/Password");
         res.sendStatus(401);
       }
-
     })
     .catch((error) => {
       console.error('Error sending/receiving credentials:', error);
       res.sendStatus(500);
     });
 });
+
 
 app.post('/uploadGuitar', (req, res) => {
   const { name, brand, body, pickup, imageUrl } = req.body;
